@@ -42,16 +42,31 @@
 9. 상품은 상품번호로 식별한다.
 10. 회원은 여러 상품을 주문할 수 있고, 하나의 상품을 여러 회원이 주문할 수 있다.
 11. 회원이 상품을 주문하면 주문에 대한 주문번호, 주문수량, 배송지, 주문일자 정보를 유지해야 한다.
-12. 회원은 여러 병원 정보를 등록할 수 있고, 하나의 병원은 한 명의 회원만 등록할 수 있다.
-13. 등록에 대한 병원 이름, 주소, 연락처, 별점 정보를 유지해야한다.
-14. 회원은 여러 병원의 리뷰를 작성할 수 있고, 리뷰 하나는 한 명의 회원만 작성할 수 있다.
-15. 작성에 대한 리뷰 번호, 병원 번호, 작성자(회원 아이디), 글 제목, 글 내용, 작성 일자, 별점 정보를 유지해야한다.
-16. 리뷰는 리뷰 번호로 식별한다.
-17. 회원은 여러 리뷰의 댓글을 달 수 있고, 댓글 하나는 한 명의 회원만 달 수 있다.
-18. 댓글달기에 대한 댓글 번호, 리뷰 번호, 작성자(회원 아이디), 댓글 내용을 유지해야한다.
-19. 댓글은 댓글 버너호로 식별한다.
-20. 회원은 즐겨찾기는 병원을 추가할 수 있다.
-21. 즐겨찾기는 즐겨찾기 아이디로 식별한다.
+12. 각 상품은 한 제조업체가 공급하고, 제조업체 하나는 여러 상품을 공급할 수 있다.
+13. 제조업체가 상품을 공급하면 공급일자와 공급량 정보를 유지해야 한다.
+14. 제조업체에 대한 제조업체명, 전화번호, 위치, 담당자 정보를 유지해야 한다.
+15. 제조업체는 제조업체명으로 식별한다.
+16. 회원은 여러 병원 정보를 등록할 수 있고, 하나의 병원은 한 명의 회원만 등록할 수 있다.
+17. 등록에 대한 병원 이름, 주소, 연락처, 별점 정보를 유지해야한다.
+18. 회원은 여러 병원의 리뷰를 작성할 수 있고, 리뷰 하나는 한 명의 회원만 작성할 수 있다.
+19. 작성에 대한 리뷰 번호, 병원 번호, 작성자(회원 아이디), 글 제목, 글 내용, 작성 일자, 별점 정보를 유지해야한다.
+20. 리뷰는 리뷰 번호로 식별한다.
+21. 회원은 여러 리뷰의 댓글을 달 수 있고, 댓글 하나는 한 명의 회원만 달 수 있다.
+22. 댓글달기에 대한 댓글 번호, 리뷰 번호, 작성자(회원 아이디), 댓글 내용을 유지해야한다.
+23. 댓글은 댓글 버너호로 식별한다.
+24. 회원은 즐겨찾기는 병원을 추가할 수 있다.
+25. 즐겨찾기는 즐겨찾기 아이디로 식별한다.
+
+개체 - 회원, 병원, 상품, 제조업체, 리뷰, 댓글, 즐겨찾기
+속성 - 회원 아이디, 비밀번호, 이름, 나이, 주소, 병원 연락처, 병원 이름, 병원 주소, 별점, 상품 번호, 상품명, 재고량, 단가, 공급일자, 공급량, 제조업체명, 전화번호, 위치, 담당자, 주문 번호, 주문 수량, 배송지, 주문일자, 리뷰 번호, 병원 번호, 회원 아이디, 글 제목, 글 내용, 작성 일자, 별점, 댓글 번호, 리뷰 번호, 회원 아이디, 댓글 내용, 즐겨찾기 아이디, 회원 아이디, 병원 연락처
+관계 - 등록, 주문, 공급, 작성, 댓글달기, 추가
+
+E-R 다이어그램
+<img width="572" alt="er다이어그램" src="https://user-images.githubusercontent.com/81346079/169820539-3ccac0c8-164f-402b-b9d3-03e71bc29af7.png">
+
+릴레이션 스키마
+<img width="318" alt="릴레이션스키마" src="https://user-images.githubusercontent.com/81346079/169823143-43d091f6-e547-48f0-8113-75dd9b73b572.png">
+*주문에 상품번호도 밑줄
 
 <개체와 속성 추출> 개체(??) - 속성(??, ??, ...)
 회원 - 회원 아이디(키 속성), 비밀번호, 이름, 나이, 주소
@@ -68,4 +83,87 @@
 댓글달기 - 회원(선택) / 댓글(필수) - 관계 유형(1:n) - 
 추가 - 회원(선택) / 즐겨찾기(필수) - 관계 유형(1:n) - 
 
-※ 추후에 더 고민해보고 수정할 계획입니다!!
+<테이블 생성 스크립트>
+create table 회원(
+회원아이디 varchar(100) not null,
+비밀번호 varchar(100) not null,
+이름 varchar(100) not null,
+나이 int,
+회원주소 varchar(100) not null,
+primary key(회원아이디)
+);
+
+create table 병원(
+병원연락처 varchar(100) not null,
+회원아이디 varchar(100) not null,
+병원이름 varchar(100) not null,
+병원주소 varchar(100) not null,
+별점  varchar(100) not null default 0,
+primary key(병원연락처),
+foreign key(회원아이디) reference 회원(회원아이디)
+);
+
+create table 즐겨찾기(
+즐겨찾기번호 int(100) not null auto_increment,
+회원아이디 varchar(100) not null,
+병원연락처 varchar(100) not null,
+primary key(즐겨찾기번호),
+foreign key(회원아이디) reference 회원(회원아이디),
+foreign key(병원연락처) reference 병원(병원연락처)
+);
+
+create table 리뷰(
+리뷰번호 int not null,
+회원아이디 varchar(100) not null,
+병원연락처 varchar(100) not null,
+글제목 varchar(100) not null,
+글내용 varchar(300) not null,
+별점 varchar(100) not null,
+primary key(리뷰번호),
+foreign key(회원아이디) reference 회원(회원아이디),
+foreign key(병원연락처) reference 병원(병원연락처)
+);
+
+create table 댓글(
+댓글번호 int not null auto_increment,
+회원아이디 varchar(100) not null,
+리뷰번호 int not null,
+댓글내용 varchar(100) not null,
+primary key(댓글번호),
+foreign key(회원아이디) reference 회원(회원아이디),
+foreign key(리뷰번호) reference 리뷰(리뷰번호)
+);
+
+create table 상품(
+상품번호 int not null auto_increment,
+상품명 varchar(100) not null,
+재고량 int not null default 0,
+단가 int,
+제조업체명 varchar(100) not null,
+공급일자 varchar(100),
+공급량 int not null default 0,
+primary key(상품번호),
+foreign key(제조업체명) reference 제조업체(제조업체명)
+);
+
+create table 제조업체(
+제조업체명 varchar(100) not null,
+전화번호 varchar(100) not null,
+위치 varchar(100) not null,
+담당자 varchar(100) not null,
+primary key(제조업체명),
+);
+
+create table 주문(
+회원아이디 varchar(100) not null,
+상품번호 int not null auto_increment,
+주문번호 int
+주문수량 int
+배송지 varchar(100) not null,
+주문일자 varchar(100) not null,
+foreign key(회원아이디) reference 회원(회원아이디),
+foreign key(상품번호) reference 상품(상품번호)
+);
+
+5/23 테이블 생성 스크립트 부분이 아직 미흡한 부분도 있는 것 같고 놓치고 넘어간 부분도 있을 것 같습니다. 좀 더 신경을 써보고 추후에 수정해보도록 하겠습니다!
+
