@@ -198,10 +198,77 @@ foreign key(상품번호) reference 상품(상품번호)
 
 <img width="110" alt="3차 정규화3" src="https://user-images.githubusercontent.com/81346079/170816101-97e97b5f-2fa9-46b7-853c-ed211ede439e.PNG">
 - 리뷰 릴레이션의 함수 종속 다이어그램
-.
-.
-.
 
-BCNF
+------------------------------------------
+6/23
 
-※ 잘 모르겠어서 고민해보고 추후에 다시 올리겠습니다 
+테이블 수정이 있어서 6/23일 기준으로 다시 올립니다.
+
+create table member(
+id varchar(100) not null,
+pwd varchar(100) not null,
+name varchar(100) not null,
+phone varchar(100) not null,
+adress varchar(100) not null,
+primary key(id));
+
+create table hospital(
+hosphone varchar(100) not null,
+hosname varchar(100) not null,
+hosadress varchar(100) not null,
+primary key(hosphone));
+
+create table favorite(
+favnum int(100) not null auto_increment,
+id varchar(100) not null,
+hosphone varchar(100) not null,
+primary key(favnum),
+foreign key(id) references member(id),
+foreign key(hosphone) references hospital(hosphone));
+
+create table review(
+revnum int not null auto_increment,
+id varchar(100) not null,
+hosphone varchar(100) not null,
+title varchar(100) not null,
+revcontent varchar(300) not null,
+primary key(revnum),
+foreign key(id) references member(id),
+foreign key(hosphone) references hospital(hosphone));
+
+create table comment(
+comnum int not null auto_increment,
+id varchar(100) not null,
+prodname varchar(100) not null,
+comcontent varchar(100) not null,
+primary key(comnum),
+foreign key(id) references member(id)
+);
+
+create table product(
+prodnum int not null auto_increment,
+prodname varchar(100) not null,
+stock int not null default 0,
+price int,
+manname varchar(100) not null,
+prodatestock varchar(100),
+primary key(prodnum),
+foreign key(manname) references manufacturer(manname));
+
+create table manufacturer(
+manname varchar(100) not null,
+manphone varchar(100) not null,
+manadress varchar(100) not null,
+person varchar(100) not null,
+primary key(manname));
+
+create table orderlist(
+ordernum int not null auto_increment,
+id varchar(100) not null,
+prodname varchar(100) not null,
+quantity int,
+adress varchar(100) not null,
+orderdate varchar(100) not null,
+primary key(ordernum)
+);
+
